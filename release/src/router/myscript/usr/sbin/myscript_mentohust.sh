@@ -13,7 +13,7 @@ start()
 		echo "then run \"myscript_mentohust.sh enable\""
 		exit 1
 	fi
-	enabled=`nvram get mentohust_enabled`
+	enabled=$(nvram get mentohust_enabled)
 	if [ "$enabled" = "1" ]
 	then
 		logger "mentohust start..."
@@ -30,12 +30,14 @@ stop()
 if [ "$1" = "enable" ]
 then
 nvram set mentohust_enabled=1
+nvram commit
 start
 echo "enabled"
 elif [ "$1" = "disable" ]
 then
 echo "disabled"
 nvram set mentohust_enabled=0
+nvram commit
 stop
 elif [ "$1" = "start" ]
 then

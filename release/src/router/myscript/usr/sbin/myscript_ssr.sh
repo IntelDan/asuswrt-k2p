@@ -18,6 +18,7 @@ then
 	echo "${ssr_json} is missing run \"$0 wizard\" first."
 	echo "then run \"$0 enable\""
 	nvram set ssr_enable=0
+	nvram commit
 	exit 1;
 fi
 }
@@ -216,6 +217,7 @@ bypasschina()
 	ipignore
 	chinaipignore
 	iptables -t nat -N SHADOWSOCKS &>/dev/null
+	iptables -t nat -A PREROUTING -j SHADOWSOCKS &>/dev/null
     iptables -t nat -A SHADOWSOCKS -m set --match-set ssr_ignore dst -j RETURN &>/dev/null
     iptables -t nat -A SHADOWSOCKS -m set --match-set cn_ignore dst -j RETURN &>/dev/null
 	iptables -t nat -A SHADOWSOCKS -p tcp -j REDIRECT --to-ports ${LPORT} &>/dev/null
@@ -233,6 +235,7 @@ global ()
     server_addr=`cat ${ssr_json} | grep "\"server\"" | cut -d ' ' -f 2 | cut -d '"' -f 2`
 	ipignore
 	iptables -t nat -N SHADOWSOCKS &>/dev/null
+	iptables -t nat -A PREROUTING -j SHADOWSOCKS &>/dev/null
     iptables -t nat -A SHADOWSOCKS -m set --match-set ssr_ignore dst -j RETURN &>/dev/null
 	iptables -t nat -A SHADOWSOCKS -p tcp -j REDIRECT --to-ports ${LPORT} &>/dev/null
 	iptables -t nat -I OUTPUT -p tcp -j SHADOWSOCKS &>/dev/null
@@ -248,6 +251,7 @@ gfw(){
 	server_addr=`cat ${ssr_json} | grep "\"server\"" | cut -d ' ' -f 2 | cut -d '"' -f 2`
 	ipignore
 	iptables -t nat -N SHADOWSOCKS &>/dev/null
+	iptables -t nat -A PREROUTING -j SHADOWSOCKS &>/dev/null
 	iptables -t nat -A SHADOWSOCKS -m set --match-set ssr_ignore dst -j RETURN &>/dev/null
 	iptables -t nat -A SHADOWSOCKS -p tcp -m set --match-set ssr dst -j REDIRECT --to-ports ${LPORT} &>/dev/null
 	iptables -t nat -I OUTPUT -p tcp -j SHADOWSOCKS &>/dev/null
@@ -272,6 +276,7 @@ set_mode(){
 	echo -e "Your Choice >\c"
 	read modes
 	nvram set ssr_mode=$(eval echo "\$modes$modes")
+	nvram commit
 	echo "done"
 }
 start() {
@@ -319,8 +324,10 @@ then
 wizard
 elif [ "$1" = "enable" ]; then
 nvram set ssr_enable=1
+nvram commit
 elif [ "$1" = "disable" ]; then
 nvram set ssr_enable=0
+nvram commit
 elif [ "$1" = "set_mode" ]; then
 set_mode
 elif [ "$1" = "help" ]; then
