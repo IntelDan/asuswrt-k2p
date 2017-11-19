@@ -192,17 +192,17 @@ killall -q -9 ssr_mon.sh
 	ipset -X ssr &>/dev/null
 	ipset -X cn_ignore &>/dev/null
 	ipset -X ssr_ignore &>/dev/null
-	kill `cat /tmp/ssr-retcp.pid`
-	rm /tmp/ssr-retcp.pid
+	kill `cat /tmp/ssr-retcp.pid` &>/dev/null
+	rm /tmp/ssr-retcp.pid &>/dev/null
 
-killall -q -9 ssr-redir
+killall -q -9 ssr-redir &>/dev/null
 
 
 #icount=`ps -w |grep pdnsd|grep -v grep|wc -l`
 #if [ $icount -gt 0 ] ;then	
-killall -q dnsproxy
+killall -q dnsproxy &>/dev/null
 
-killall -q dnsmasq
+killall -q dnsmasq &>/dev/null
 
 dnsmasq
 #fi
