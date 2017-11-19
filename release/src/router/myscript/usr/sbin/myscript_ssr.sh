@@ -184,8 +184,8 @@ chinaipignore(){
 }
 stop() {
 
+	killall -q -9 ssr_mon.sh
 #清除防火墙规则
-killall -q -9 ssr_mon.sh
 	iptables -t nat -D OUTPUT -p tcp -j SHADOWSOCKS &>/dev/null
 	iptables -t nat -F SHADOWSOCKS &>/dev/null
 	iptables -t nat -X SHADOWSOCKS &>/dev/null
@@ -194,8 +194,6 @@ killall -q -9 ssr_mon.sh
 	ipset -X ssr_ignore &>/dev/null
 	kill `cat /tmp/ssr-retcp.pid` &>/dev/null
 	rm /tmp/ssr-retcp.pid &>/dev/null
-
-killall -q -9 ssr-redir &>/dev/null
 
 
 #icount=`ps -w |grep pdnsd|grep -v grep|wc -l`
@@ -290,21 +288,17 @@ ssr_mode=$(nvram get ssr_mode)
 if [ "$ssr_mode" = "gfw" ]
 then
 	gfw
-	/usr/ssr/ssr_mon.sh &
 elif [ "$ssr_mode" = "bypass" ]
 then
 	bypass
-	/usr/ssr/ssr_mon.sh &
 elif [ "$ssr_mode" = "global" ]
 then
 	global
-	/usr/ssr/ssr_mon.sh &
 else
 	echo "warnning: start gfwlist by default"
 	gfw
-	/usr/ssr/ssr_mon.sh &
 fi
-
+	/usr/sbin/ssr_mon.sh &
 fi
 
 

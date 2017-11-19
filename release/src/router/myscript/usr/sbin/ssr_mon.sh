@@ -2,7 +2,7 @@
 check_time=120
 while [ "1" = "1" ]  
 do 
-
+  sleep $check_time
 #check iptables
 
    icount=`ps -w|grep ssr-retcp |grep -v grep |wc -l`
@@ -21,6 +21,5 @@ do
    /usr/sbin/myscript_ssr.sh 
    exit 0
    fi
-  sleep $check_time
 done
 
