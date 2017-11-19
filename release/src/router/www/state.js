@@ -993,7 +993,7 @@ else{
 		tabtitle[14] = new Array("");
 		tabtitle[15] = new Array("", "<#Guest_Network#>", "Facebook Wi-Fi");
 }
-		tabtitle[16] = new Array("", "<#System_Info#>", "<#SSR#>", "<#User_Script#>");
+		tabtitle[16] = new Array("", "<#System_Info#>");
 
 var tablink = new Array();
 tablink[0] = new Array("", "Advanced_Wireless_Content.asp", "Advanced_WWPS_Content.asp", "Advanced_WMode_Content.asp", "Advanced_ACL_Content.asp", "Advanced_WSecurity_Content.asp", "Advanced_WAdvanced_Content.asp","Advanced_Wireless_Survey.asp", "Advanced_WProxy_Content.asp");
@@ -1044,7 +1044,7 @@ else{
 	tablink[14] = new Array("");
 	tablink[15] = new Array("", "Guest_network.asp", "Guest_network_fbwifi.asp");
 }
-tablink[16] = new Array("", "Tools_Sysinfo.asp","Tools_SSR.asp","Tools_Script.asp");
+tablink[16] = new Array("", "Tools_Sysinfo.asp");
 // Level 2 Menu
 menuL2_title = new Array("", "<#menu5_1#>", "Passpoint", "<#menu5_2#>", "<#menu5_3#>", "<#menu5_4#>", "IPv6", "VPN", "<#menu5_5#>", "<#menu5_6#>", "<#System_Log#>", "<#Network_Tools#>");
 menuL2_link  = new Array("", tablink[0][1], tablink[1][1], tablink[2][1], tablink[3][1], tablink[4][1], tablink[5][1], tablink[6][1], tablink[7][1], tablink[8][1], tablink[9][1], tablink[10][1]);

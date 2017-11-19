@@ -1,6 +1,5 @@
 #!/bin/sh
 check_time=120
-dns_mode=`nvram get ssr_dnsmode`
 while [ "1" = "1" ]  
 do 
   sleep $check_time
@@ -16,15 +15,13 @@ do
    exit 0
    fi
 
-#check pdnsd
-if [ "$dns_mode" = "1" ] ;then
-   icount=`ps -w|grep pdnsd |grep -v grep |wc -l`
+#check dnsproxy
+   icount=`ps -w|grep dnsproxy |grep -v grep |wc -l`
    if [ $icount = 0 ] ;then
-   logger -t "ssr" "pdnsd error,restart ssr!"
+   logger -t "ssr" "dnsproxy error,restart ssr!"
    /usr/sbin/myscript_ssr.sh 
    exit 0
    fi
-fi
 
 done
 

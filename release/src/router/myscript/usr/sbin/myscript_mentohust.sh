@@ -5,9 +5,44 @@ then
 mkdir /jffs/mentohust
 fi
 
-enabled=nvram get mentohust_en
-if [ enabled = "1" ]
+start()
+{
+	if [ ! -f /jffs/mentohust/mentohust.conf ]
+	then
+		echo "run \"mentohust\" to generate /jffs/mentohust/mentohust.conf first!"
+		echo "then run \"myscript_mentohust.sh enable\""
+		exit 1
+	fi
+	enabled=`nvram get mentohust_enabled`
+	if [ "$enabled" = "1" ]
+	then
+		logger "mentohust start..."
+		mentohust -b3 -y0
+	fi
+}
+
+stop()
+{
+	logger "mentohust stoped"
+	mentohust -k
+}
+
+if [ "$1" = "enable" ]
 then
-logger "mentohust start..."
-/jffs/mentohust/mentohust -b3 -y0
+nvram set mentohust_enabled=1
+start
+echo "enabled"
+elif [ "$1" = "disable" ]
+then
+echo "disabled"
+nvram set mentohust_enabled=0
+stop
+elif [ "$1" = "start" ]
+then
+start
+echo "started"
+elif [ "$1" = "stop" ]
+then
+stop
+echo "stoped"
 fi
