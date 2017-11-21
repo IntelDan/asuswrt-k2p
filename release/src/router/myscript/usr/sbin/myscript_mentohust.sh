@@ -5,8 +5,17 @@ then
 mkdir /jffs/mentohust
 fi
 
-start()
+stop()
 {
+	logger "mentohust stoped"
+	killall -q mentohust_mon.sh
+	mentohust -k
+}
+
+
+restart()
+{
+	stop
 	if [ ! -f /jffs/mentohust/mentohust.conf ]
 	then
 		echo "run \"mentohust\" to generate /jffs/mentohust/mentohust.conf first!"
@@ -18,13 +27,8 @@ start()
 	then
 		logger "mentohust start..."
 		mentohust -b3 -y0
+		/usr/sbin/mentohust_mon.sh &
 	fi
-}
-
-stop()
-{
-	logger "mentohust stoped"
-	mentohust -k
 }
 
 if [ "$1" = "enable" ]
@@ -39,9 +43,9 @@ echo "disabled"
 nvram set mentohust_enabled=0
 nvram commit
 stop
-elif [ "$1" = "start" ]
+elif [ "$1" = "restart" ]
 then
-start
+restart
 echo "started"
 elif [ "$1" = "stop" ]
 then

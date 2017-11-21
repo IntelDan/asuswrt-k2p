@@ -15,8 +15,7 @@ do
 
    if [ $icount = 0 ] ;then
    logger -t "mentohust" "mentohust error,restart mentohust!"
-   /usr/sbin/myscript_mentohust.sh stop
-   /usr/sbin/myscript_mentohust.sh start
+   /usr/sbin/myscript_mentohust.sh restart
    exit 0
    fi
 
